@@ -5,6 +5,7 @@
  */
 package Fechas;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -18,40 +19,7 @@ public class Fecha {
     private String fecha;
 
     public Fecha() {
-    }
-    public void devolverEdadEnSemanas(){
-        int edad,d,m,y;
- 
-        String fech;
-        Scanner sc=new Scanner(System.in);
-        System.out.println("Introduzca su fecha se nacimiento");
-        fech=sc.next();
-        setFecha(fech);
-        separarFecha();
-         
-        y=Integer.parseInt(getAño());
-       
-        
-    }
-    public int calcularsem(int dia,int mes,int anio){
-      int ed=0;
-      int a;
-      int b;
-      int c;
-      
-         Calendar fecha = new GregorianCalendar();
-        
-         int anioac = fecha.get(Calendar.YEAR);
-         System.out.println( fecha.getWeekYear());
-         
-         int mesac = fecha.get(Calendar.MONTH);
-         int diaac = fecha.get(Calendar.DATE);
-         
-         
-      return ed;
-    }
-    
-    
+    } 
     public void recibirFecha(String unaFecha){
         setFecha(unaFecha); 
     }
@@ -113,6 +81,81 @@ public class Fecha {
                     
                     }                
         return estacion;
+    }
+    
+    public void diaaSemanas() throws ParseException{
+
+        Scanner d = new Scanner(System.in);
+        System.out.println("ingrese fecha de nacimiento dd/MM/yyyy:");
+        fecha = d.nextLine();
+        System.out.println("fecha ingresada:" + pasarstringadate(fecha));
+        Date hol;
+        hol = pasarstringadate(fecha);
+        Date datee = new Date();
+        System.out.println("fecha actual:" +datee);
+        System.out.print("cantidad de semanas entre las fechas:" +cantidad(datee,hol));
+    }
+    private int cantidad(Date ac, Date nac){
+    int semana=(int) ((ac.getTime()-nac.getTime())/604800000);//cantidad de milisegundos en una semana
+    return semana;
+    }
+        public Date pasarstringadate(String fechaa){
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        try{
+            Date fechadevuelta = formato.parse(fechaa);
+            return fechadevuelta;}
+        catch(ParseException a)
+        {
+        }
+        return null;
+    }
+          public void MostrarCantDomingos() throws ParseException{
+              Scanner sc =new Scanner(System.in);  
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            System.out.println("Ingrese FechIn, con Formato dd/MM/yyyy");    
+            String fechaux = sc.next();
+           Date fecha1 = df.parse(fechaux);
+            System.out.println("Ingrese FechFin, con Formato dd/MM/yyyy");    
+            String fechafin = sc.next();
+           Date fecha2 =df.parse(fechafin);    
+        int domingos = 0; 
+        int nrodia = 1;  //1 domingo 2 lunes 
+        int diferencia = getDiferencaDias(fecha1, fecha2);
+        Date fcurso = fecha1;
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(fecha1);
+        for(int i = 1; i<= diferencia  ; i++){
+            int dia = cal.get(Calendar.DAY_OF_WEEK);
+            if(dia == 1)
+            {
+                domingos++;
+            }
+            cal.add(Calendar.DAY_OF_YEAR, 1); 
+        }
+        
+        System.out.println(domingos);
+    }
+    public void DevolverDiferencaDias(Date fechaInicial, Date fechaFinal){
+	int dias=(int) ((fechaFinal.getTime()-fechaInicial.getTime())/86400000);
+	System.out.println("Hay "+dias+" dias de diferencia");
+    }
+    
+    public int getDiferencaDias(Date fechaInicial, Date fechaFinal){
+	int dias=(int) ((fechaFinal.getTime()-fechaInicial.getTime())/86400000);
+	return dias;
+    }
+    public void devolverdif() throws ParseException{
+        
+       Scanner sc =new Scanner(System.in);  
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            System.out.println("Ingrese FechIn, con Formato dd/MM/yyyy");    
+            String fechaux = sc.next();
+           Date fechaInicial = df.parse(fechaux);
+            System.out.println("Ingrese FechFin, con Formato dd/MM/yyyy");    
+            String fechaFin = sc.next();
+           Date fechaFinal =df.parse(fechaFin);
+            Fecha d = new Fecha();
+          d.DevolverDiferencaDias(fechaInicial, fechaFinal);
     }
    
  
