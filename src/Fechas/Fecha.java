@@ -161,7 +161,7 @@ public class Fecha {
  
         public  void fechar100() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Introduzca día, mes y año");
+        System.out.println("Introduzca día, mes y año: ");
         int dia = sc.nextInt();
         int mes = sc.nextInt();
         int year = sc.nextInt();

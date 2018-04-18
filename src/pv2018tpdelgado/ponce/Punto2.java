@@ -9,6 +9,7 @@ import Fechas.Fecha;
 public class Punto2 {
     public static void menu2(){
         Fecha fh=new Fecha();
+        fh.devolverEstacion();
         
         
         
